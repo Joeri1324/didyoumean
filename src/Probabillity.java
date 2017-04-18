@@ -11,6 +11,8 @@ import java.util.*;
 
 public class Probabillity {
     
+    private static final String CONFUSION_MATRIX_PATH = "../data/confusionMatrices/";
+    
     int[][] insTable;
     int[][] delTable;
     int[][] subTable;
@@ -26,11 +28,11 @@ public class Probabillity {
      * Calculates the confusion totals of the matrices.
      */ 
     public Probabillity() {
-    	Read rd = new Read();
-    	insTable = rd.readInMatrix("insertion.txt");
-    	delTable = rd.readInMatrix("deletion.txt");
-        subTable = rd.readInMatrix("substitution.txt");
-        transTable = rd.readInMatrix("transposition.txt");
+    	Reader rd = new Reader();
+    	insTable = rd.readInConfusionMatrix(CONFUSION_MATRIX_PATH + "insertion.txt");
+    	delTable = rd.readInConfusionMatrix(CONFUSION_MATRIX_PATH + "deletion.txt");
+        subTable = rd.readInConfusionMatrix(CONFUSION_MATRIX_PATH + "substitution.txt");
+        transTable = rd.readInConfusionMatrix(CONFUSION_MATRIX_PATH + "transposition.txt");
         insTotal = getTotal(insTable);
         delTotal = getTotal(delTable);
         transTotal = getTotal(transTable);

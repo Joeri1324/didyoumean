@@ -16,8 +16,8 @@ public class DidYouMean {
 
     Trie dictionary;
     Reader rd;
-    WagnerFischer wf;
-    Probabillity calc;
+    EditDistanceCalc wf;
+    ProbabillityCalc calc;
 
     public static void main(String[] args) {
         DidYouMean s = new DidYouMean();
@@ -51,8 +51,8 @@ public class DidYouMean {
     private ArrayList<Double> getProbs(ArrayList<String> options,String answer) {
         ArrayList<Double> probs = new ArrayList<Double>();
         for (int i = 0; i < options.size(); i++) {
-               int[][] matrix = wf.wagnerFischer(answer, options.get(i));
-               Double prob  = calc.probabillity(matrix, answer, options.get(i));
+               int[][] matrix = wf.calcEditDistance(answer, options.get(i));
+               Double prob  = calc.calcProbTransform(matrix, answer, options.get(i));
                probs.add(prob);
            }
            return probs;
@@ -99,8 +99,8 @@ public class DidYouMean {
     private void setup() {
         rd = new Reader();
         dictionary = rd.readInFile(URL_PATH + "governmentURLs.txt");
-        calc = new Probabillity();
-        wf = new WagnerFischer();
+        calc = new ProbabillityCalc();
+        wf = new EditDistanceCalc();
     }
 
     /**

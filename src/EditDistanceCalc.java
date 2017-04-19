@@ -1,5 +1,5 @@
 /**
- * Implemenation of the Wagner-Fischer algorithm 
+ * Implemantion of the Wagner-Fischer algorithm.
  * For implementing this algorithm the paper "On approximate string matching"
  * was used.  
  * 
@@ -45,14 +45,14 @@ public class EditDistanceCalc {
                     matrix[indexI][indexJ] = matrix[indexI-1][indexJ-1]; 
                     continue; 
                 }
-                int deletion = matrix[indexI-1][indexJ] + 1;
-                int insertion = matrix[indexI][indexJ-1] + 1;
-                int subtitution =  matrix[indexI-1][indexJ-1] + 1;
-                int tempMin = Math.min(deletion, insertion);
-                int min = Math.min(tempMin, subtitution);
+                int deletion    = matrix[indexI-1][indexJ] + 1;
+                int insertion   = matrix[indexI][indexJ-1] + 1;
+                int subtitution = matrix[indexI-1][indexJ-1] + 1;
+                int tempMin     = Math.min(deletion, insertion);
+                int min         = Math.min(tempMin, subtitution);
                 if (j > 0 && i > 0 ) {
                     String sequence1 = string1.substring(j-1, j+1);
-                    String sequence2 = string2.substring(i, i+1) + string2.substring(i-1,i);
+                    String sequence2 = string2.substring(i, i+1) + string2.substring(i-1, i);
                     if (sequence1.equals(sequence2)) {
                         int transposition = matrix[indexI-2][indexJ-2] + 1;
                         min = Math.min(min, transposition);
@@ -65,9 +65,10 @@ public class EditDistanceCalc {
     }
 
     /**
-     * Takes a String string1 and a String string2 as input.
-     * Creates a matrix using wagner-fischer.
-     * returns the bottom right field of that matrix.
+     * Takes a String string1 and a String string2 as input. Floads a matrix 
+     * using wagner-fischer. Returns the bottom right field of that matrix.
+     * 
+     * @return edit-distance between string1 and string2
      */ 
     public int editDistance(String string1, String string2) {
         int[][] matrix = calcEditDistance(string1, string2);

@@ -100,7 +100,7 @@ public class Trie {
      * @param userInput
      */ 
     public ArrayList<String> getOptions(String userInput, int maxEdit) {
-        WagnerFischer wf = new WagnerFischer();
+        EditDistanceCalc wf = new EditDistanceCalc();
         ArrayList<TrieNode> toBeSearched = new ArrayList<TrieNode>();
         ArrayList<TrieNode> children     = topNode.getChildren();
         ArrayList<TrieNode> temp         = new ArrayList<TrieNode>();

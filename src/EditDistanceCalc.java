@@ -3,7 +3,7 @@
  * For implementing this algorithm the paper "On approximate string matching"
  * was used.  
  * 
- * @author Joeri Sleegers 10631186
+ * @author Joeri Sleegers
  */ 
 
 public class EditDistanceCalc {

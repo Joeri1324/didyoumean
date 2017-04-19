@@ -45,17 +45,20 @@ public class DidYouMean {
     /**
      * Takes an ArrayList<String> options and a String answer as input.
      * Iterate through options, calculate the probability for each String given
-     * answer and add it to ArrayList<Double> probs.
-     * Return probs.
+     * answer and add it to ArrayList<Double> probs. Return probs.
+     *
+     * @param options options to retrieve probability between answer
+     * @param answer  answer to retrieve probabillity betwen answer
+     * @return        probabillities
      */
     private ArrayList<Double> getProbs(ArrayList<String> options,String answer) {
         ArrayList<Double> probs = new ArrayList<Double>();
         for (int i = 0; i < options.size(); i++) {
-               int[][] matrix = edCalc.calcEditDistance(answer, options.get(i));
-               Double prob  = probCalc.calcProbTransform(matrix, answer, options.get(i));
-               probs.add(prob);
-           }
-           return probs;
+            int[][] matrix = edCalc.calcEditDistance(answer, options.get(i));
+            Double prob  = probCalc.calcProbTransform(matrix, answer, options.get(i));
+            probs.add(prob);
+        }    
+        return probs;
     }
 
     /**

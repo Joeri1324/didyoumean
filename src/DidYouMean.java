@@ -16,8 +16,8 @@ public class DidYouMean {
 
     Trie dictionary;
     Reader rd;
-    EditDistanceCalc wf;
-    ProbabillityCalc calc;
+    EditDistanceCalc edCalc;
+    ProbabillityCalc probCalc;
 
     public static void main(String[] args) {
         DidYouMean s = new DidYouMean();
@@ -51,64 +51,70 @@ public class DidYouMean {
     private ArrayList<Double> getProbs(ArrayList<String> options,String answer) {
         ArrayList<Double> probs = new ArrayList<Double>();
         for (int i = 0; i < options.size(); i++) {
-               int[][] matrix = wf.calcEditDistance(answer, options.get(i));
-               Double prob  = calc.calcProbTransform(matrix, answer, options.get(i));
+               int[][] matrix = edCalc.calcEditDistance(answer, options.get(i));
+               Double prob  = probCalc.calcProbTransform(matrix, answer, options.get(i));
                probs.add(prob);
            }
            return probs;
     }
 
     /**
-     * Takes a String answer as input.
-     * Selects the apropriate candidates for answer according to
-     * MAX_EDIT_DISTANCE If no candidates are found, try to find candites for
-     * increments of 1 to MAX_EDIT_DISTANCE. If it exceeds 8 exit the program.
-     * Return options.
+     * Takes a String answer as input. Selects the apropriate candidates for 
+     * answer according toMAX_EDIT_DISTANCE If no candidates are found, try to 
+     * find candites for increments of 1 to MAX_EDIT_DISTANCE. If it exceeds 8 
+     * exit the program. Return options.
+     *
+     * @param answer user input to find candidates for
+     * @return       suggestions for the user
      */
     private ArrayList<String> candidateSelection(String answer) {
         int maxEdit = MAX_EDIT_DISTANCE;
         ArrayList<String> options = dictionary.getOptions(answer, maxEdit);
         while (options.isEmpty()) {
             maxEdit++;
-                if (maxEdit > 8) {
-                    System.out.println("Sorry, we couldn't find the requested URL");
-                    System.exit(0);
-                }
+            if (maxEdit > 8) {
+                System.out.println("Sorry, we couldn't find the requested URL");
+                System.exit(0);
+            }
             options = dictionary.getOptions(answer, maxEdit);
         }
         return options;
     }
 
     /**
-     * Takes an ArrayList<String> result as input.
-     * Outputs the first 3 elements of result.
+     * Takes an ArrayList<String> result as input. Outputs the first 3 elements
+     * of result.
+     *
+     * @param options options to suggest to the user
      */
-    private void printResult(ArrayList<String> result) {
+    private void printResult(ArrayList<String> options) {
         System.out.println("What do you mean?: ");
-        for (int i = 0; i < result.size(); i++) {
-               if (i > 2) {
-                   break;
-               }
-           System.out.println( " - " + result.get(i));
+        for (int i = 0; i < options.size(); i++) {
+           if (i > 2) {
+               break;
            }
+           System.out.println( " - " + options.get(i));
+        }
     }
 
     /**
-     * Instantiates rd, dictionary calc and wf.
+     * Instantiates rd, dictionary calc and edCalc.
      */
     private void setup() {
         rd = new Reader();
         dictionary = rd.readInFile(URL_PATH + "governmentURLs.txt");
-        calc = new ProbabillityCalc();
-        wf = new EditDistanceCalc();
+        probCalc = new ProbabillityCalc();
+        edCalc = new EditDistanceCalc();
     }
 
     /**
      * Takes an ArrayList<String> options and an ArrayList<Double> probs as input
      * Iterate through probs, for every Double iterate throughprobs,
      * if the double from the first iteration is higher then the second iteration
-     * swap them, and swap the corresponding elements in options.
-     * return options.
+     * swap them, and swap the corresponding elements in options. Return options.
+     *
+     * @param options options to the sort
+     * @param probs   probabillities to sort the options on
      */
     private ArrayList<String> sort(ArrayList<String> options,
                                    ArrayList<Double> probs) {

@@ -7,7 +7,6 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Reader {
     
     private static final int ALPHABET_SIZE = 26;
